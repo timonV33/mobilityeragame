@@ -8,19 +8,19 @@ import { supabase, type InquiryRecord, type InquiryStatus } from "@/lib/supabase
 
 const STATUS_LABELS: Record<InquiryStatus, { label: string; cls: string }> = {
   new: {
-    label: "Новая",
+    label: "New",
     cls: "bg-[#b4f48c] text-[#0c1017] font-semibold",
   },
   in_progress: {
-    label: "В работе",
+    label: "In Progress",
     cls: "bg-[#155eef] text-white font-semibold",
   },
   contacted: {
-    label: "Связались",
+    label: "Contacted",
     cls: "bg-emerald-100 text-emerald-900 font-semibold",
   },
   archived: {
-    label: "В архиве",
+    label: "Archived",
     cls: "bg-black/[0.07] text-[#0c1017]/60 font-medium",
   },
 };
@@ -139,7 +139,7 @@ export default function AdminDashboardPage() {
 
     if (error) {
       setInquiries(prev);
-      alert("Ошибка обновления статуса: " + error.message);
+      alert("Failed to update status: " + error.message);
     }
   };
 
@@ -153,7 +153,7 @@ export default function AdminDashboardPage() {
 
     setSavingNotes(false);
     if (error) {
-      alert("Ошибка сохранения заметки: " + error.message);
+      alert("Failed to save notes: " + error.message);
       return;
     }
 
@@ -167,10 +167,10 @@ export default function AdminDashboardPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm("Удалить эту заявку безвозвратно?")) return;
+    if (!confirm("Are you sure you want to permanently delete this inquiry?")) return;
     const { error } = await supabase.from("inquiries").delete().eq("id", id);
     if (error) {
-      alert("Ошибка удаления: " + error.message);
+      alert("Failed to delete inquiry: " + error.message);
       return;
     }
     const remaining = inquiries.filter((i) => i.id !== id);
@@ -195,7 +195,7 @@ export default function AdminDashboardPage() {
       },
     ]);
     if (error) {
-      alert("Ошибка создания тестовой заявки: " + error.message);
+      alert("Failed to create sample inquiry: " + error.message);
       return;
     }
     fetchInquiries();
@@ -279,7 +279,7 @@ export default function AdminDashboardPage() {
   if (authLoading) {
     return (
       <div className="min-h-screen bg-[#f4f5f8] flex items-center justify-center text-sm text-[#0c1017]/60">
-        Загрузка панели управления...
+        Loading Admin Portal...
       </div>
     );
   }
@@ -308,7 +308,7 @@ export default function AdminDashboardPage() {
             href="/"
             className="h-9 px-4 rounded-full bg-white text-xs font-medium text-[#0c1017] inline-flex items-center gap-1.5 shadow-2xs hover:bg-black/[0.04]"
           >
-            ← Вернуться на сайт
+            ← Back to Website
           </Link>
         </header>
 
@@ -320,10 +320,10 @@ export default function AdminDashboardPage() {
             </div>
 
             <h1 className="mt-4 font-display text-4xl sm:text-[42px] leading-[1.02] tracking-[-0.02em]">
-              Вход в админ-панель
+              Admin Portal Sign In
             </h1>
             <p className="mt-2 text-[13.5px] text-[#0c1017]/60 leading-relaxed">
-              Просмотр и обработка откликов школ, университетов и партнёров.
+              Manage pilot school inquiries, quote requests, and institutional partnerships.
             </p>
 
             {authError && (
@@ -335,7 +335,7 @@ export default function AdminDashboardPage() {
             <form onSubmit={handleLogin} className="mt-6 space-y-4">
               <label className="block">
                 <span className="block text-[12px] font-medium text-[#0c1017]/70 mb-1.5">
-                  Email администратора
+                  Admin Email
                 </span>
                 <input
                   required
@@ -348,7 +348,7 @@ export default function AdminDashboardPage() {
 
               <label className="block">
                 <span className="block text-[12px] font-medium text-[#0c1017]/70 mb-1.5">
-                  Пароль
+                  Password
                 </span>
                 <input
                   required
@@ -365,7 +365,7 @@ export default function AdminDashboardPage() {
                 className="w-full group inline-flex items-center justify-center gap-2 pt-2 cursor-pointer disabled:opacity-60"
               >
                 <span className="flex-1 h-12 rounded-full bg-[#0c1017] group-hover:bg-[#1a2232] text-white text-sm font-medium inline-flex items-center justify-center transition-colors">
-                  {authSubmitting ? "Вход..." : "Войти в панель"}
+                  {authSubmitting ? "Signing in..." : "Sign In to Dashboard"}
                 </span>
                 <span className="w-12 h-12 rounded-full bg-[#155eef] text-white grid place-items-center shrink-0">
                   ↗
@@ -374,9 +374,13 @@ export default function AdminDashboardPage() {
             </form>
 
             <div className="mt-6 pt-5 border-t border-black/[0.07] text-[12px] text-[#0c1017]/55 space-y-1">
-              <div className="font-semibold text-[#0c1017]">Данные из SQL-скрипта:</div>
-              <div>Логин: <code className="text-[#155eef]">admin@mobilityeragame.com</code></div>
-              <div>Пароль: <code className="text-[#155eef]">MobilityAdmin2026!</code></div>
+              <div className="font-semibold text-[#0c1017]">Default Admin Credentials:</div>
+              <div>
+                Email: <code className="text-[#155eef]">admin@mobilityeragame.com</code>
+              </div>
+              <div>
+                Password: <code className="text-[#155eef]">MobilityAdmin2026!</code>
+              </div>
             </div>
           </div>
         </main>
@@ -419,7 +423,7 @@ export default function AdminDashboardPage() {
               href="/"
               className="h-9 px-4 rounded-full bg-[#f4f5f8] hover:bg-black/[0.07] text-xs font-medium inline-flex items-center gap-1.5 transition-colors"
             >
-              <span>Открыть сайт</span>
+              <span>View Website</span>
               <span>↗</span>
             </Link>
             <span className="hidden md:inline text-xs text-[#0c1017]/50 px-2">
@@ -429,7 +433,7 @@ export default function AdminDashboardPage() {
               onClick={handleLogout}
               className="h-9 px-4 rounded-full bg-[#0c1017] hover:bg-red-600 text-white text-xs font-medium transition-colors cursor-pointer"
             >
-              Выйти
+              Sign Out
             </button>
           </div>
         </div>
@@ -440,10 +444,10 @@ export default function AdminDashboardPage() {
         {dbError && (
           <div className="mb-6 rounded-[24px] bg-amber-50 border border-amber-300 p-6 text-sm text-amber-950">
             <div className="font-semibold text-base">
-              Таблица <code className="font-mono">public.inquiries</code> ещё не создана или недоступна
+              Table <code className="font-mono">public.inquiries</code> is not initialized yet
             </div>
             <p className="mt-1 text-xs text-amber-900/80">
-              Текст ответа БД: <code>{dbError}</code>. Выполните скрипт <code>supabase/schema.sql</code> в Supabase SQL Editor и нажмите «Обновить».
+              Database response: <code>{dbError}</code>. Please run <code>supabase/schema.sql</code> in the Supabase SQL Editor and click &ldquo;Refresh&rdquo;.
             </p>
           </div>
         )}
@@ -452,10 +456,10 @@ export default function AdminDashboardPage() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wider text-[#155eef]">
-              Отклики с формы «Let&apos;s Collaborate»
+              Responses from &ldquo;Let&apos;s Collaborate&rdquo; Form
             </p>
             <h1 className="mt-1 font-display text-4xl sm:text-5xl leading-none tracking-[-0.02em]">
-              Заявки школ и партнёров
+              School &amp; Partner Inquiries
             </h1>
           </div>
 
@@ -464,20 +468,20 @@ export default function AdminDashboardPage() {
               onClick={handleCreateSample}
               className="h-10 px-4 rounded-full bg-white hover:bg-black/[0.04] border border-black/[0.08] text-xs font-medium transition-colors cursor-pointer"
             >
-              + Тестовая заявка
+              + Sample Inquiry
             </button>
             <button
               onClick={handleExportCSV}
               disabled={filteredInquiries.length === 0}
               className="h-10 px-4 rounded-full bg-white hover:bg-black/[0.04] border border-black/[0.08] text-xs font-medium transition-colors cursor-pointer disabled:opacity-40"
             >
-              Скачать CSV ({filteredInquiries.length})
+              Export CSV ({filteredInquiries.length})
             </button>
             <button
               onClick={fetchInquiries}
               className="h-10 px-5 rounded-full bg-[#155eef] hover:bg-[#114fd1] text-white text-xs font-semibold transition-colors cursor-pointer"
             >
-              {loadingData ? "Обновление..." : "↻ Обновить"}
+              {loadingData ? "Refreshing..." : "↻ Refresh"}
             </button>
           </div>
         </div>
@@ -486,9 +490,9 @@ export default function AdminDashboardPage() {
         <div className="mt-7 grid grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="rounded-[24px] bg-white p-5 sm:p-6 shadow-[0_6px_20px_rgba(12,16,23,0.04)]">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-[#0c1017]/55">Всего откликов</span>
+              <span className="text-xs text-[#0c1017]/55">Total Inquiries</span>
               <span className="px-2.5 py-0.5 rounded-full bg-[#f4f5f8] text-[11px] font-medium">
-                Все время
+                All Time
               </span>
             </div>
             <div className="mt-3 font-display text-5xl leading-none">{counts.all}</div>
@@ -496,9 +500,9 @@ export default function AdminDashboardPage() {
 
           <div className="rounded-[24px] bg-white p-5 sm:p-6 shadow-[0_6px_20px_rgba(12,16,23,0.04)]">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-[#0c1017]/55">Новые заявки</span>
+              <span className="text-xs text-[#0c1017]/55">New Inquiries</span>
               <span className="px-2.5 py-0.5 rounded-full bg-[#b4f48c] text-[11px] font-semibold">
-                Требуют ответа
+                Needs Reply
               </span>
             </div>
             <div className="mt-3 font-display text-5xl leading-none text-[#155eef]">
@@ -508,9 +512,9 @@ export default function AdminDashboardPage() {
 
           <div className="rounded-[24px] bg-white p-5 sm:p-6 shadow-[0_6px_20px_rgba(12,16,23,0.04)]">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-[#0c1017]/55">В работе / Связались</span>
+              <span className="text-xs text-[#0c1017]/55">In Progress / Contacted</span>
               <span className="px-2.5 py-0.5 rounded-full bg-[#eaf3ff] text-[#155eef] text-[11px] font-semibold">
-                Активные
+                Active
               </span>
             </div>
             <div className="mt-3 font-display text-5xl leading-none">
@@ -520,9 +524,9 @@ export default function AdminDashboardPage() {
 
           <div className="rounded-[24px] bg-[#eaf3ff] p-5 sm:p-6">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-[#0c1017]/65">География охвата</span>
+              <span className="text-xs text-[#0c1017]/65">Geographic Reach</span>
               <span className="px-2.5 py-0.5 rounded-full bg-white text-[11px] font-semibold text-[#155eef]">
-                Страны
+                Countries
               </span>
             </div>
             <div className="mt-3 font-display text-5xl leading-none">{counts.countries}</div>
@@ -534,11 +538,11 @@ export default function AdminDashboardPage() {
           <div className="flex flex-wrap items-center gap-1.5">
             {(
               [
-                { id: "all", label: `Все (${counts.all})` },
-                { id: "new", label: `Новые (${counts.new})` },
-                { id: "in_progress", label: `В работе (${counts.in_progress})` },
-                { id: "contacted", label: `Связались (${counts.contacted})` },
-                { id: "archived", label: `Архив (${counts.archived})` },
+                { id: "all", label: `All (${counts.all})` },
+                { id: "new", label: `New (${counts.new})` },
+                { id: "in_progress", label: `In Progress (${counts.in_progress})` },
+                { id: "contacted", label: `Contacted (${counts.contacted})` },
+                { id: "archived", label: `Archived (${counts.archived})` },
               ] as const
             ).map((tab) => (
               <button
@@ -560,7 +564,7 @@ export default function AdminDashboardPage() {
               type="search"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Поиск по имени, школе, email, стране..."
+              placeholder="Search by name, school, email, country..."
               className="w-full h-10 rounded-full bg-white border border-black/[0.08] px-4 text-xs focus:outline-none focus:border-[#155eef]"
             />
           </div>
@@ -572,9 +576,9 @@ export default function AdminDashboardPage() {
           <div className="lg:col-span-7 space-y-2.5">
             {filteredInquiries.length === 0 ? (
               <div className="rounded-[28px] bg-white p-12 text-center">
-                <div className="font-display text-3xl text-[#0c1017]">Заявок пока нет</div>
+                <div className="font-display text-3xl text-[#0c1017]">No inquiries found</div>
                 <p className="mt-2 text-xs text-[#0c1017]/55 max-w-sm mx-auto">
-                  Отправьте заявку через форму внизу главной страницы или нажмите кнопку «+ Тестовая заявка» выше.
+                  Submit an inquiry through the website form or click &ldquo;+ Sample Inquiry&rdquo; above to test the workflow.
                 </p>
               </div>
             ) : (
@@ -607,7 +611,7 @@ export default function AdminDashboardPage() {
                         </span>
                       </div>
                       <span className="text-[11px] text-[#0c1017]/45">
-                        {new Date(item.created_at).toLocaleString("ru-RU", {
+                        {new Date(item.created_at).toLocaleString("en-GB", {
                           day: "2-digit",
                           month: "short",
                           year: "numeric",
@@ -650,7 +654,7 @@ export default function AdminDashboardPage() {
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <span className="text-[11px] font-mono uppercase tracking-wider text-[#155eef]">
-                       Карточка отклика
+                      Inquiry Details
                     </span>
                     <h2 className="mt-1 font-display text-3xl leading-tight text-[#0c1017]">
                       {selectedInquiry.name}
@@ -664,14 +668,14 @@ export default function AdminDashboardPage() {
                     onClick={() => handleDelete(selectedInquiry.id)}
                     className="h-8 px-3 rounded-full bg-red-50 hover:bg-red-100 text-red-600 text-[11px] font-medium transition-colors cursor-pointer"
                   >
-                    Удалить
+                    Delete
                   </button>
                 </div>
 
                 {/* Status Switcher */}
                 <div className="mt-6">
                   <div className="text-[11px] font-semibold uppercase tracking-wider text-[#0c1017]/45 mb-2">
-                    Статус заявки
+                    Inquiry Status
                   </div>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5">
                     {(["new", "in_progress", "contacted", "archived"] as InquiryStatus[]).map(
@@ -704,19 +708,19 @@ export default function AdminDashboardPage() {
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-[#0c1017]/45">Роль / Должность</dt>
+                    <dt className="text-[#0c1017]/45">Role / Title</dt>
                     <dd className="mt-0.5 font-medium text-[#0c1017]">
                       {selectedInquiry.role || "—"}
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-[#0c1017]/45">Страна</dt>
+                    <dt className="text-[#0c1017]/45">Country</dt>
                     <dd className="mt-0.5 font-medium text-[#0c1017]">
                       {selectedInquiry.country}
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-[#0c1017]/45">Язык интерфейса</dt>
+                    <dt className="text-[#0c1017]/45">Site Language</dt>
                     <dd className="mt-0.5 font-mono uppercase text-[#0c1017]">
                       {selectedInquiry.language}
                     </dd>
@@ -726,10 +730,10 @@ export default function AdminDashboardPage() {
                 {/* Message Body */}
                 <div className="mt-6 pt-5 border-t border-black/[0.07]">
                   <div className="text-[11px] font-semibold uppercase tracking-wider text-[#0c1017]/45 mb-2">
-                    Сообщение
+                    Message
                   </div>
                   <div className="rounded-2xl bg-[#f4f5f8] p-4 text-[13.5px] leading-relaxed text-[#0c1017]/85 whitespace-pre-wrap">
-                    {selectedInquiry.message || "Без дополнительного текста"}
+                    {selectedInquiry.message || "No additional message provided."}
                   </div>
                 </div>
 
@@ -737,11 +741,11 @@ export default function AdminDashboardPage() {
                 <div className="mt-6 pt-5 border-t border-black/[0.07]">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-[11px] font-semibold uppercase tracking-wider text-[#0c1017]/45">
-                      Внутренние заметки админа
+                      Internal Admin Notes
                     </span>
                     {notesSavedToast && (
                       <span className="text-[11px] font-semibold text-emerald-600">
-                        ✓ Сохранено
+                        ✓ Saved
                       </span>
                     )}
                   </div>
@@ -749,7 +753,7 @@ export default function AdminDashboardPage() {
                     rows={3}
                     value={notesDraft}
                     onChange={(e) => setNotesDraft(e.target.value)}
-                    placeholder="Запишите комментарии по звонку, бюджету или дате пилота..."
+                    placeholder="Add internal follow-up notes, call summary, or pilot schedule..."
                     className="w-full rounded-2xl bg-[#f4f5f8] border border-black/[0.08] p-3.5 text-xs focus:outline-none focus:bg-white focus:border-[#155eef] resize-none"
                   />
                   <div className="mt-3 flex items-center justify-between gap-2">
@@ -758,7 +762,7 @@ export default function AdminDashboardPage() {
                       disabled={savingNotes}
                       className="h-9 px-4 rounded-full bg-[#0c1017] hover:bg-[#1a2232] text-white text-xs font-medium cursor-pointer disabled:opacity-50"
                     >
-                      {savingNotes ? "Сохранение..." : "Сохранить заметку"}
+                      {savingNotes ? "Saving..." : "Save Notes"}
                     </button>
 
                     <a
@@ -767,7 +771,7 @@ export default function AdminDashboardPage() {
                       )}`}
                       className="h-9 px-4 rounded-full bg-[#155eef] hover:bg-[#114fd1] text-white text-xs font-medium inline-flex items-center gap-1.5"
                     >
-                      <span>Ответить по Email</span>
+                      <span>Reply via Email</span>
                       <span>↗</span>
                     </a>
                   </div>
@@ -775,7 +779,7 @@ export default function AdminDashboardPage() {
               </div>
             ) : (
               <div className="rounded-[28px] bg-white p-8 text-center text-xs text-[#0c1017]/45">
-                Выберите заявку слева для просмотра деталей
+                Select an inquiry from the list to inspect details
               </div>
             )}
           </div>
