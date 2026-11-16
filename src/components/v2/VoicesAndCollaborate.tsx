@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useLanguage } from "@/components/LanguageContext";
+import { supabase } from "@/lib/supabase";
 import { Reveal, KickerBadge, LimeTag } from "./primitives";
 import { v2Labels } from "./labels";
 
@@ -172,6 +173,44 @@ export function V2Collaborate() {
   const c = copy.collaborate;
   const t = v2Labels[lang];
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [form, setForm] = useState({
+    name: "",
+    school: "",
+    email: "",
+    country: "",
+    role: "",
+    message: "",
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    setErrorMsg(null);
+
+    const { error } = await supabase.from("inquiries").insert([
+      {
+        name: form.name.trim(),
+        school: form.school.trim(),
+        email: form.email.trim(),
+        country: form.country.trim(),
+        role: form.role.trim(),
+        message: form.message.trim(),
+        language: lang,
+      },
+    ]);
+
+    setSubmitting(false);
+
+    if (error) {
+      setErrorMsg(error.message);
+      return;
+    }
+
+    setForm({ name: "", school: "", email: "", country: "", role: "", message: "" });
+    setSent(true);
+  };
 
   const inputCls =
     "w-full rounded-2xl bg-white border border-black/[0.08] px-4 py-3 text-[14px] text-[#0c1017] placeholder:text-[#0c1017]/35 focus:outline-none focus:border-[#155eef] focus:ring-2 focus:ring-[#155eef]/15 transition-all";
@@ -244,13 +283,7 @@ export function V2Collaborate() {
                 </button>
               </div>
             ) : (
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  setSent(true);
-                }}
-                className="space-y-4"
-              >
+              <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="mb-6">
                   <div className="flex items-center justify-between gap-3">
                     <h3 className="font-display text-3xl sm:text-4xl leading-tight text-[#0c1017]">
@@ -261,45 +294,92 @@ export function V2Collaborate() {
                   <p className="mt-1.5 text-[13.5px] text-[#0c1017]/60">{t.formIntro}</p>
                 </div>
 
+                {errorMsg && (
+                  <div className="rounded-2xl bg-red-50 border border-red-200 px-4 py-3 text-xs text-red-700">
+                    {errorMsg}
+                  </div>
+                )}
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <label className="block">
                     <span className={labelCls}>{c.form.name} *</span>
-                    <input required type="text" className={inputCls} placeholder="Dr. / Prof. / Jane Doe" />
+                    <input
+                      required
+                      type="text"
+                      value={form.name}
+                      onChange={(e) => setForm({ ...form, name: e.target.value })}
+                      className={inputCls}
+                      placeholder="Dr. / Prof. / Jane Doe"
+                    />
                   </label>
                   <label className="block">
                     <span className={labelCls}>{c.form.school} *</span>
-                    <input required type="text" className={inputCls} placeholder="Lycée / European School" />
+                    <input
+                      required
+                      type="text"
+                      value={form.school}
+                      onChange={(e) => setForm({ ...form, school: e.target.value })}
+                      className={inputCls}
+                      placeholder="Lycée / European School"
+                    />
                   </label>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <label className="block">
                     <span className={labelCls}>{c.form.email} *</span>
-                    <input required type="email" className={inputCls} placeholder="teacher@school.eu" />
+                    <input
+                      required
+                      type="email"
+                      value={form.email}
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      className={inputCls}
+                      placeholder="teacher@school.eu"
+                    />
                   </label>
                   <label className="block">
                     <span className={labelCls}>{c.form.country} *</span>
-                    <input required type="text" className={inputCls} placeholder="Luxembourg, France, Germany..." />
+                    <input
+                      required
+                      type="text"
+                      value={form.country}
+                      onChange={(e) => setForm({ ...form, country: e.target.value })}
+                      className={inputCls}
+                      placeholder="Luxembourg, France, Germany..."
+                    />
                   </label>
                 </div>
 
                 <label className="block">
                   <span className={labelCls}>{c.form.role}</span>
-                  <input type="text" className={inputCls} placeholder="Economics Teacher, Headmaster, Curriculum Director" />
+                  <input
+                    type="text"
+                    value={form.role}
+                    onChange={(e) => setForm({ ...form, role: e.target.value })}
+                    className={inputCls}
+                    placeholder="Economics Teacher, Headmaster, Curriculum Director"
+                  />
                 </label>
 
                 <label className="block">
                   <span className={labelCls}>{c.form.message}</span>
-                  <textarea rows={3} className={`${inputCls} resize-none`} placeholder={c.form.message} />
+                  <textarea
+                    rows={3}
+                    value={form.message}
+                    onChange={(e) => setForm({ ...form, message: e.target.value })}
+                    className={`${inputCls} resize-none`}
+                    placeholder={c.form.message}
+                  />
                 </label>
 
                 <div className="pt-2 flex items-center justify-between gap-4">
                   <button
                     type="submit"
-                    className="group inline-flex items-center gap-1.5 cursor-pointer"
+                    disabled={submitting}
+                    className="group inline-flex items-center gap-1.5 cursor-pointer disabled:opacity-60"
                   >
                     <span className="h-12 px-7 rounded-full bg-[#0c1017] group-hover:bg-[#1a2232] text-white text-[14px] font-medium inline-flex items-center transition-colors">
-                      {c.btnSubmit}
+                      {submitting ? "Sending..." : c.btnSubmit}
                     </span>
                     <span className="w-12 h-12 rounded-full bg-[#155eef] group-hover:bg-[#114fd1] text-white grid place-items-center shadow-[0_6px_18px_rgba(21,94,239,0.35)] transition-transform group-hover:scale-105">
                       ↗
