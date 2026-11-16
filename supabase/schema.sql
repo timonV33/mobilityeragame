@@ -1,39 +1,42 @@
 -- ============================================================================
--- MOBILITY ERA GAME — SUPABASE DATABASE SCHEMA & ADMIN SETUP
--- Вставьте этот скрипт целиком в Supabase Dashboard -> SQL Editor -> Run
+-- MOBILITY ERA GAME — PRODUCTION SUPABASE SCHEMA, HARDENED RLS & ADMIN SETUP
+-- Paste and run in Supabase Dashboard -> SQL Editor
 -- ============================================================================
 
--- 1. Расширения
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
--- 2. Таблица заявок с формы сайта (Request a Quote / Pilot School Inquiry)
+-- 1. Inquiries Table with Strict Field Length & Validation Constraints
 CREATE TABLE IF NOT EXISTS public.inquiries (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  name TEXT NOT NULL,
-  school TEXT NOT NULL,
-  email TEXT NOT NULL,
-  country TEXT NOT NULL,
-  role TEXT DEFAULT '',
-  message TEXT DEFAULT '',
-  language TEXT DEFAULT 'en',
+  name TEXT NOT NULL CHECK (char_length(trim(name)) BETWEEN 1 AND 200),
+  school TEXT NOT NULL CHECK (char_length(trim(school)) BETWEEN 1 AND 250),
+  email TEXT NOT NULL CHECK (
+    char_length(trim(email)) BETWEEN 3 AND 254
+    AND email ~* '^[^@\s]+@[^@\s]+\.[^@\s]+$'
+  ),
+  country TEXT NOT NULL CHECK (char_length(trim(country)) BETWEEN 1 AND 120),
+  role TEXT DEFAULT '' CHECK (char_length(COALESCE(role, '')) <= 200),
+  message TEXT DEFAULT '' CHECK (char_length(COALESCE(message, '')) <= 5000),
+  language TEXT DEFAULT 'en' CHECK (language IN ('en', 'fr', 'de', 'it', 'ro', 'es')),
   status TEXT NOT NULL DEFAULT 'new' CHECK (status IN ('new', 'in_progress', 'contacted', 'archived')),
-  admin_notes TEXT DEFAULT '',
+  admin_notes TEXT DEFAULT '' CHECK (char_length(COALESCE(admin_notes, '')) <= 5000),
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
--- Индексы для быстрой фильтрации и сортировки в админ-панели
 CREATE INDEX IF NOT EXISTS idx_inquiries_created_at ON public.inquiries (created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_inquiries_status ON public.inquiries (status);
 
--- Триггер автоматического обновления поля updated_at
 CREATE OR REPLACE FUNCTION public.set_updated_at()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SET search_path = public
+AS $$
 BEGIN
   NEW.updated_at = now();
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$;
 
 DROP TRIGGER IF EXISTS trg_inquiries_updated_at ON public.inquiries;
 CREATE TRIGGER trg_inquiries_updated_at
@@ -41,48 +44,64 @@ BEFORE UPDATE ON public.inquiries
 FOR EACH ROW
 EXECUTE FUNCTION public.set_updated_at();
 
--- 3. Настройка Row Level Security (RLS)
+-- 2. Helper function to verify Admin role / email from JWT
+CREATE OR REPLACE FUNCTION public.is_admin()
+RETURNS BOOLEAN
+LANGUAGE sql
+STABLE
+SET search_path = public
+AS $$
+  SELECT COALESCE(
+    (auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
+    OR lower(auth.jwt() ->> 'email') = 'admin@mobilityeragame.com',
+    false
+  );
+$$;
+
+-- 3. Row Level Security (RLS)
 ALTER TABLE public.inquiries ENABLE ROW LEVEL SECURITY;
 
--- Разрешаем любым посетителям сайта (anon и authenticated) отправлять форму
+-- Public visitors can ONLY insert new inquiries without spoofing status or admin_notes
 DROP POLICY IF EXISTS "Allow public insert on inquiries" ON public.inquiries;
 CREATE POLICY "Allow public insert on inquiries"
   ON public.inquiries
   FOR INSERT
   TO anon, authenticated
-  WITH CHECK (true);
+  WITH CHECK (
+    status = 'new'
+    AND COALESCE(admin_notes, '') = ''
+  );
 
--- Разрешаем авторизованному администратору читать все заявки
+-- Only verified Admin can read inquiries
 DROP POLICY IF EXISTS "Allow authenticated select on inquiries" ON public.inquiries;
 CREATE POLICY "Allow authenticated select on inquiries"
   ON public.inquiries
   FOR SELECT
   TO authenticated
-  USING (true);
+  USING (public.is_admin());
 
--- Разрешаем авторизованному администратору обновлять статус и заметки
+-- Only verified Admin can update inquiries
 DROP POLICY IF EXISTS "Allow authenticated update on inquiries" ON public.inquiries;
 CREATE POLICY "Allow authenticated update on inquiries"
   ON public.inquiries
   FOR UPDATE
   TO authenticated
-  USING (true)
-  WITH CHECK (true);
+  USING (public.is_admin())
+  WITH CHECK (public.is_admin());
 
--- Разрешаем авторизованному администратору удалять заявки
+-- Only verified Admin can delete inquiries
 DROP POLICY IF EXISTS "Allow authenticated delete on inquiries" ON public.inquiries;
 CREATE POLICY "Allow authenticated delete on inquiries"
   ON public.inquiries
   FOR DELETE
   TO authenticated
-  USING (true);
+  USING (public.is_admin());
 
--- Явно выдаём права ролям Supabase API
 GRANT USAGE ON SCHEMA public TO anon, authenticated;
 GRANT INSERT ON public.inquiries TO anon, authenticated;
 GRANT SELECT, UPDATE, DELETE ON public.inquiries TO authenticated;
 
--- 4. Включаем Realtime для таблицы заявок (чтобы новые заявки появлялись без перезагрузки)
+-- 4. Enable Realtime
 DO $$
 BEGIN
   IF NOT EXISTS (
@@ -98,9 +117,9 @@ EXCEPTION
   WHEN OTHERS THEN NULL;
 END $$;
 
--- 5. Создание готового Админ-аккаунта в Supabase Auth
--- Логин:    admin@mobilityeragame.com
--- Пароль:   MobilityAdmin2026!
+-- 5. Provision Initial Admin Account in Supabase Auth
+-- Email:    admin@mobilityeragame.com
+-- Password: MobilityAdmin2026! (can be changed anytime in Supabase Dashboard -> Authentication)
 DO $$
 DECLARE
   v_user_id UUID;
@@ -167,10 +186,9 @@ BEGIN
       now()
     );
   ELSE
-    -- Если уже существует — обновляем пароль на MobilityAdmin2026! и подтверждаем email
     UPDATE auth.users
     SET
-      encrypted_password = crypt('MobilityAdmin2026!', gen_salt('bf')),
+      raw_app_meta_data = '{"provider":"email","providers":["email"],"role":"admin"}'::jsonb,
       email_confirmed_at = COALESCE(email_confirmed_at, now()),
       updated_at = now()
     WHERE id = v_user_id;

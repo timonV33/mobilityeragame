@@ -31,7 +31,7 @@ export default function AdminDashboardPage() {
 
   // Auth form state
   const [email, setEmail] = useState("admin@mobilityeragame.com");
-  const [password, setPassword] = useState("MobilityAdmin2026!");
+  const [password, setPassword] = useState("");
   const [authError, setAuthError] = useState<string | null>(null);
   const [authSubmitting, setAuthSubmitting] = useState(false);
 
@@ -216,7 +216,12 @@ export default function AdminDashboardPage() {
       "Message",
       "Admin Notes",
     ];
-    const escape = (v: string) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+    // Prevent CSV Formula Injection (DDE) in Excel/Google Sheets
+    const escape = (v: string) => {
+      const str = String(v ?? "");
+      const safe = /^[=+\-@\t\r]/.test(str) ? `'${str}` : str;
+      return `"${safe.replace(/"/g, '""')}"`;
+    };
     const rows = filteredInquiries.map((r) =>
       [
         r.id,
@@ -373,14 +378,8 @@ export default function AdminDashboardPage() {
               </button>
             </form>
 
-            <div className="mt-6 pt-5 border-t border-black/[0.07] text-[12px] text-[#0c1017]/55 space-y-1">
-              <div className="font-semibold text-[#0c1017]">Default Admin Credentials:</div>
-              <div>
-                Email: <code className="text-[#155eef]">admin@mobilityeragame.com</code>
-              </div>
-              <div>
-                Password: <code className="text-[#155eef]">MobilityAdmin2026!</code>
-              </div>
+            <div className="mt-6 pt-5 border-t border-black/[0.07] text-[12px] text-[#0c1017]/55">
+              Protected by Supabase Row-Level Security (RLS). Authorized personnel only.
             </div>
           </div>
         </main>

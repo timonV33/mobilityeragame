@@ -182,21 +182,28 @@ export function V2Collaborate() {
     country: "",
     role: "",
     message: "",
+    website: "", // Honeypot field against spam bots
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    // Silently drop bot submissions that fill the hidden honeypot field
+    if (form.website.trim() !== "") {
+      setSent(true);
+      return;
+    }
+
     setSubmitting(true);
     setErrorMsg(null);
 
     const { error } = await supabase.from("inquiries").insert([
       {
-        name: form.name.trim(),
-        school: form.school.trim(),
-        email: form.email.trim(),
-        country: form.country.trim(),
-        role: form.role.trim(),
-        message: form.message.trim(),
+        name: form.name.trim().slice(0, 200),
+        school: form.school.trim().slice(0, 250),
+        email: form.email.trim().slice(0, 254),
+        country: form.country.trim().slice(0, 120),
+        role: form.role.trim().slice(0, 200),
+        message: form.message.trim().slice(0, 5000),
         language: lang,
       },
     ]);
@@ -208,7 +215,7 @@ export function V2Collaborate() {
       return;
     }
 
-    setForm({ name: "", school: "", email: "", country: "", role: "", message: "" });
+    setForm({ name: "", school: "", email: "", country: "", role: "", message: "", website: "" });
     setSent(true);
   };
 
@@ -300,12 +307,25 @@ export function V2Collaborate() {
                   </div>
                 )}
 
+                {/* Hidden honeypot input for anti-spam */}
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  value={form.website}
+                  onChange={(e) => setForm({ ...form, website: e.target.value })}
+                  className="hidden"
+                  aria-hidden="true"
+                />
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <label className="block">
                     <span className={labelCls}>{c.form.name} *</span>
                     <input
                       required
                       type="text"
+                      maxLength={200}
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
                       className={inputCls}
@@ -317,6 +337,7 @@ export function V2Collaborate() {
                     <input
                       required
                       type="text"
+                      maxLength={250}
                       value={form.school}
                       onChange={(e) => setForm({ ...form, school: e.target.value })}
                       className={inputCls}
@@ -331,6 +352,7 @@ export function V2Collaborate() {
                     <input
                       required
                       type="email"
+                      maxLength={254}
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
                       className={inputCls}
@@ -342,6 +364,7 @@ export function V2Collaborate() {
                     <input
                       required
                       type="text"
+                      maxLength={120}
                       value={form.country}
                       onChange={(e) => setForm({ ...form, country: e.target.value })}
                       className={inputCls}
@@ -354,6 +377,7 @@ export function V2Collaborate() {
                   <span className={labelCls}>{c.form.role}</span>
                   <input
                     type="text"
+                    maxLength={200}
                     value={form.role}
                     onChange={(e) => setForm({ ...form, role: e.target.value })}
                     className={inputCls}
@@ -365,6 +389,7 @@ export function V2Collaborate() {
                   <span className={labelCls}>{c.form.message}</span>
                   <textarea
                     rows={3}
+                    maxLength={5000}
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
                     className={`${inputCls} resize-none`}
