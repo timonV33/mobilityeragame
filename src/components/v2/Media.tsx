@@ -102,12 +102,15 @@ export default function V2Media() {
   const m = copy.media;
   const t = v2Labels[lang];
 
-  const v1Src: Source = { kind: "file", src: m.video1.src || "/herovideo.mp4" };
+  const v1Src: Source =
+    m.video1.type === "youtube" && m.video1.src
+      ? { kind: "youtube", id: youtubeId(m.video1.src) }
+      : { kind: "youtube", id: "J3Av0F019IE" };
   const v2Src: Source = { kind: "youtube", id: youtubeId(m.video2.src) };
   const v3Src: Source =
     m.video3.type === "youtube" && m.video3.src
       ? { kind: "youtube", id: youtubeId(m.video3.src) }
-      : { kind: "file", src: m.video3.src || "/video.mp4" };
+      : { kind: "youtube", id: "aaLjVsLoty8" };
 
   return (
     <section id="media" className="scroll-mt-24 py-14 sm:py-20">
@@ -173,7 +176,7 @@ export default function V2Media() {
               poster={
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src="/images/board-closeup.webp"
+                  src={`https://i.ytimg.com/vi/${youtubeId(m.video3.src || "aaLjVsLoty8")}/hqdefault.jpg`}
                   alt={m.video3.title}
                   className="absolute inset-0 h-full w-full object-cover"
                 />
