@@ -129,10 +129,9 @@ export default function V2Framework() {
           <div id="study" className="lg:col-span-6 scroll-mt-24 flex">
             <div className="relative w-full min-h-[440px] rounded-[28px] overflow-hidden bg-[#101828] p-5 sm:p-8 flex flex-col justify-center items-center">
               <Image
-                src="/images/hero-scene-edge.png"
+                src="/images/full-game.webp"
                 alt="Mobility Era Board Game"
                 fill
-                unoptimized
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover opacity-85"
               />

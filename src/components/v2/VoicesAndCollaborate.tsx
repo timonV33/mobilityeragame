@@ -230,10 +230,9 @@ export function V2Collaborate() {
         <Reveal className="lg:col-span-5 flex">
           <div className="relative w-full min-h-[480px] rounded-[32px] overflow-hidden bg-[#0c1017] p-8 sm:p-10 flex flex-col justify-between text-white shadow-[0_20px_50px_rgba(12,16,23,0.12)]">
             <Image
-              src="/images/hero-scene-edge.png"
+              src="/images/board-closeup.webp"
               alt="Mobility Era"
               fill
-              unoptimized
               sizes="(max-width: 1024px) 100vw, 42vw"
               className="object-cover"
             />

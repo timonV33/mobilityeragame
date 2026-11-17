@@ -24,7 +24,6 @@ export default function V2Hero() {
         <video
           ref={videoRef}
           src="/video.mp4"
-          poster="/images/hero-scene-edge.png"
           autoPlay
           muted
           playsInline
