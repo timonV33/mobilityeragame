@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useLanguage } from "@/components/LanguageContext";
 import type { Language } from "@/data/websiteCopy";
 import { v2Labels, PILOT_PDF } from "./labels";
@@ -35,18 +34,9 @@ export default function V2Footer() {
       <div className="mx-auto max-w-[1320px] px-5 sm:px-8">
         <div className="grid grid-cols-12 gap-y-10 lg:gap-x-12">
           <div className="col-span-12 lg:col-span-4">
-            <div className="flex items-center gap-2.5">
-              <span className="relative w-8 h-8 rounded-full overflow-hidden bg-[#f2f4f8]">
-                <Image
-                  src="/images/globe-logo.png"
-                  alt="Mobility Era"
-                  fill
-                  unoptimized
-                  className="object-contain p-0.5"
-                />
-              </span>
+            <div className="flex items-center">
               <span className="font-display text-2xl leading-none">
-                Researchista · Mobility <em>Era</em>
+                Mobility <em>Era</em> Game
               </span>
             </div>
             <p className="mt-4 max-w-sm text-[13.5px] leading-relaxed text-[#0c1017]/60">

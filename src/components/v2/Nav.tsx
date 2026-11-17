@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { useLanguage } from "@/components/LanguageContext";
 import type { Language } from "@/data/websiteCopy";
 import { v2Labels } from "./labels";
@@ -37,20 +36,11 @@ export default function V2Nav() {
           {/* Brand mark */}
           <a
             href="#top"
-            className="flex items-center gap-2 rounded-full pl-1 pr-3 py-1 hover:bg-black/[0.04] transition-colors"
-            aria-label="Mobility Era"
+            className="flex items-center rounded-full px-3.5 py-1.5 hover:bg-black/[0.04] transition-colors"
+            aria-label="Mobility Era Game"
           >
-            <span className="relative w-7 h-7 rounded-full overflow-hidden bg-[#f2f4f8] shrink-0">
-              <Image
-                src="/images/globe-logo.png"
-                alt="Mobility Era"
-                fill
-                unoptimized
-                className="object-contain p-0.5"
-              />
-            </span>
-            <span className="font-display text-[19px] leading-none text-[#0c1017] tracking-tight">
-              Mobility <em>Era</em>
+            <span className="font-display text-[19px] leading-none text-[#0c1017] tracking-tight whitespace-nowrap">
+              Mobility <em>Era</em> Game
             </span>
           </a>
 
@@ -122,7 +112,7 @@ export default function V2Nav() {
         <div className="fixed inset-0 z-[70] bg-[#0c1017]/95 backdrop-blur-xl text-white flex flex-col justify-between p-6 sm:p-12">
           <div className="flex items-center justify-between max-w-[1320px] w-full mx-auto">
             <span className="font-display text-3xl">
-              Mobility <em>Era</em>
+              Mobility <em>Era</em> Game
             </span>
             <button
               onClick={() => setOpen(false)}

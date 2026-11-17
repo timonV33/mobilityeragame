@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useMemo, useCallback } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import type { Session } from "@supabase/supabase-js";
 import { supabase, type InquiryRecord, type InquiryStatus } from "@/lib/supabase";
@@ -294,18 +293,9 @@ export default function AdminDashboardPage() {
     return (
       <div className="min-h-screen bg-[#f4f5f8] text-[#0c1017] flex flex-col justify-between p-4 sm:p-8">
         <header className="max-w-[1320px] w-full mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2.5">
-            <span className="relative w-8 h-8 rounded-full overflow-hidden bg-white shadow-xs">
-              <Image
-                src="/images/globe-logo.png"
-                alt="Mobility Era"
-                fill
-                unoptimized
-                className="object-contain p-0.5"
-              />
-            </span>
+          <Link href="/" className="flex items-center">
             <span className="font-display text-2xl leading-none">
-              Mobility <em>Era</em> · Admin
+              Mobility <em>Era</em> Game · Admin
             </span>
           </Link>
 
@@ -398,18 +388,9 @@ export default function AdminDashboardPage() {
       <header className="sticky top-0 z-40 bg-white/90 backdrop-blur-xl border-b border-black/[0.06]">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-2.5">
-              <span className="relative w-8 h-8 rounded-full overflow-hidden bg-[#f4f5f8]">
-                <Image
-                  src="/images/globe-logo.png"
-                  alt="Mobility Era"
-                  fill
-                  unoptimized
-                  className="object-contain p-0.5"
-                />
-              </span>
+            <Link href="/" className="flex items-center">
               <span className="font-display text-2xl leading-none">
-                Mobility <em>Era</em>
+                Mobility <em>Era</em> Game
               </span>
             </Link>
             <span className="px-2.5 py-0.5 rounded-full bg-[#b4f48c] text-[11px] font-semibold text-[#0c1017]">
