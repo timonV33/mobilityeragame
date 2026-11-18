@@ -62,6 +62,20 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${dancingScript.variable} ${caveat.variable} ${instrumentSerif.variable} h-full antialiased`}
     >
+      <head>
+        <link
+          rel="preload"
+          as="image"
+          href="/images/hero-banner-fullhd.webp"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="/images/mobility-era-logo.webp"
+          fetchPriority="high"
+        />
+      </head>
       <body className="min-h-full flex flex-col bg-white text-zinc-900">
         {children}
       </body>

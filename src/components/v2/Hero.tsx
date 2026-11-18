@@ -6,6 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Users, Clock, Trophy, Globe, ArrowRight, Download } from "lucide-react";
 import { PILOT_PDF } from "./labels";
 
+const HERO_BLUR_DATA_URL =
+  "data:image/webp;base64,UklGRtIAAABXRUJQVlA4IMYAAAAwBQCdASogABIAPp1InkslpCKhqAgAsBOJZADDNFbQskThl7MN/cgQRjuE4pjuR6J9gAD+/sLIw8Ezddcr3MCtwG4ZkFX1hyCm/5TfunaKt9LQrEzXNQvLGLWbFP3vgRfrKqhV3bkq8HeokS3l0xm4ZQTYGmSP7H9EMWAyqrW9QtKzY9/dymjug0pDGFj/wRMujZ9Cmsf7z6u+JXVDZs4lpIHc+IF6lWiNiymWJ5k85YPmmU0zxPYlqf04n561r7aBXSOaAAA=";
+
 export default function V2Hero() {
   const { copy } = useLanguage();
 
@@ -17,11 +20,14 @@ export default function V2Hero() {
       {/* Full-Bleed Right-Side Hero Scene on Desktop (Stretched to top, right, and bottom edges, zero visible borders, 3440x1920 4K/FullHD+ resolution) */}
       <div className="hidden lg:block absolute top-0 right-0 bottom-0 w-[60%] xl:w-[64%] 2xl:w-[66%] h-full pointer-events-none select-none z-0">
         <Image
-          src="/images/hero-banner-fullhd.png"
+          src="/images/hero-banner-fullhd.webp"
           alt="Mobility Era Board Game with Eiffel Tower and European Journey"
           fill
           priority
+          fetchPriority="high"
           unoptimized
+          placeholder="blur"
+          blurDataURL={HERO_BLUR_DATA_URL}
           className="object-cover object-right"
           sizes="(max-width: 1024px) 100vw, 66vw"
         />
@@ -102,11 +108,13 @@ export default function V2Hero() {
         {/* Mobile Hero Image */}
         <div className="lg:hidden w-full aspect-[16/9] sm:aspect-[2/1] relative mt-10 pointer-events-none select-none">
           <Image
-            src="/images/hero-banner-fullhd.png"
+            src="/images/hero-banner-fullhd.webp"
             alt="Mobility Era Board Game with Eiffel Tower and European Journey"
             fill
             priority
             unoptimized
+            placeholder="blur"
+            blurDataURL={HERO_BLUR_DATA_URL}
             className="object-cover object-right"
             sizes="100vw"
           />

@@ -37,7 +37,7 @@ export default function V2Footer() {
           <div className="col-span-12 lg:col-span-4">
             <div className="flex items-center">
               <Image
-                src="/images/mobility-era-logo.png"
+                src="/images/mobility-era-logo.webp"
                 alt="Mobility Era — App & Board Game"
                 width={170}
                 height={121}

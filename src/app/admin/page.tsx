@@ -399,7 +399,7 @@ export default function AdminDashboardPage() {
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center">
               <Image
-                src="/images/mobility-era-logo.png"
+                src="/images/mobility-era-logo.webp"
                 alt="Mobility Era — App & Board Game"
                 width={130}
                 height={93}

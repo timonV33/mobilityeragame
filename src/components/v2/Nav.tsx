@@ -47,7 +47,7 @@ export default function V2Nav() {
           <div className="flex items-center shrink-0">
             <a href="#top" className="block select-none" aria-label="Mobility Era — App & Board Game">
               <Image
-                src="/images/mobility-era-logo.png"
+                src="/images/mobility-era-logo.webp"
                 alt="Mobility Era — App & Board Game"
                 width={200}
                 height={143}
