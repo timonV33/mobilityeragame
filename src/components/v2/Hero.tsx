@@ -12,30 +12,43 @@ export default function V2Hero() {
   return (
     <section
       id="top"
-      className="relative w-full bg-white overflow-hidden border-b border-slate-200"
+      className="relative w-full min-h-[calc(100vh-5.5rem)] bg-white flex items-center overflow-hidden border-b border-slate-200"
     >
-      <div className="w-full flex flex-col lg:flex-row items-center justify-between">
-        {/* Left Column Content */}
-        <div className="relative z-10 w-full lg:w-[45%] xl:w-[44%] pl-4 pr-4 sm:pl-6 sm:pr-6 lg:pl-12 xl:pl-[max(3rem,calc((100vw-1440px)/2+3rem))] lg:pr-6 py-10 lg:py-12 flex flex-col items-start text-left space-y-5">
+      {/* Full-Bleed Right-Side Hero Scene on Desktop (Stretched to top, right, and bottom edges, zero visible borders, 3440x1920 4K/FullHD+ resolution) */}
+      <div className="hidden lg:block absolute top-0 right-0 bottom-0 w-[60%] xl:w-[64%] 2xl:w-[66%] h-full pointer-events-none select-none z-0">
+        <Image
+          src="/images/hero-banner-fullhd.png"
+          alt="Mobility Era Board Game with Eiffel Tower and European Journey"
+          fill
+          priority
+          unoptimized
+          className="object-cover object-right"
+          sizes="(max-width: 1024px) 100vw, 66vw"
+        />
+      </div>
+
+      {/* Left Column Content */}
+      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 py-10 lg:py-16 flex flex-col lg:flex-row items-center justify-between">
+        <div className="max-w-xl xl:max-w-2xl flex flex-col items-start text-left space-y-6">
           {/* Designer Typography Title */}
           <div className="space-y-0.5">
-            <h1 className="text-4xl sm:text-6xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-black tracking-tight uppercase leading-[0.9] text-[#0f172a]">
+            <h1 className="text-5xl sm:text-7xl lg:text-8xl xl:text-[5.5rem] font-black tracking-tight uppercase leading-[0.88] text-[#0f172a]">
               <span>{copy.hero.title1}</span>
               <br />
               <span className="text-[#1a66ff]">{copy.hero.title2}</span>
             </h1>
-            <p className="font-[family-name:var(--font-caveat)] text-3xl sm:text-5xl lg:text-4xl xl:text-5xl text-[#0f172a] font-bold tracking-tight pl-0.5 select-none leading-tight mt-1">
+            <p className="font-[family-name:var(--font-caveat)] text-4xl sm:text-5xl lg:text-6xl text-[#0f172a] font-bold tracking-tight pl-0.5 select-none leading-tight mt-1">
               {copy.hero.subtitle}
             </p>
           </div>
 
           {/* Description Subtitle */}
-          <p className="text-sm sm:text-base lg:text-[15px] xl:text-[16px] text-slate-600 leading-relaxed font-normal max-w-lg">
+          <p className="text-sm sm:text-base lg:text-[16px] text-slate-600 leading-relaxed font-normal max-w-xl">
             {copy.hero.description}
           </p>
 
           {/* Institutional Framework Note */}
-          <div className="p-3.5 rounded-xl bg-blue-50/70 border border-blue-100 text-xs text-slate-700 leading-relaxed font-medium max-w-lg">
+          <div className="p-3.5 rounded-xl bg-blue-50/70 border border-blue-100 text-xs text-slate-700 leading-relaxed font-medium max-w-xl">
             🇪🇺 {copy.hero.frameworkNote}
           </div>
 
@@ -64,7 +77,7 @@ export default function V2Hero() {
             <Button
               asChild
               size="lg"
-              className="group rounded-full px-7 py-6 text-sm sm:text-base font-bold bg-[#1a66ff] hover:bg-[#1255db] text-white shadow-[0_10px_25px_rgba(26,102,255,0.35)] hover:shadow-[0_14px_30px_rgba(26,102,255,0.45)] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer inline-flex items-center"
+              className="group rounded-full px-8 py-6 text-sm sm:text-base font-bold bg-[#1a66ff] hover:bg-[#1255db] text-white shadow-[0_10px_25px_rgba(26,102,255,0.35)] hover:shadow-[0_14px_30px_rgba(26,102,255,0.45)] hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer inline-flex items-center"
             >
               <a href="#framework" className="flex items-center gap-2">
                 <span>{copy.hero.btnCurriculum}</span>
@@ -86,16 +99,16 @@ export default function V2Hero() {
           </div>
         </div>
 
-        {/* Right Column: Full Uncropped Photo Flush to Top, Right, and Bottom Edges */}
-        <div className="relative w-full lg:w-[55%] xl:w-[56%] shrink-0 self-stretch pointer-events-none select-none">
+        {/* Mobile Hero Image */}
+        <div className="lg:hidden w-full aspect-[16/9] sm:aspect-[2/1] relative mt-10 pointer-events-none select-none">
           <Image
-            src="/images/hero-banner-scene.jpg"
+            src="/images/hero-banner-fullhd.png"
             alt="Mobility Era Board Game with Eiffel Tower and European Journey"
-            width={2032}
-            height={1442}
+            fill
             priority
             unoptimized
-            className="w-full h-auto block"
+            className="object-cover object-right"
+            sizes="100vw"
           />
         </div>
       </div>
