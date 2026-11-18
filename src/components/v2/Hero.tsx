@@ -1,10 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useLanguage } from "@/components/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Users, Clock, Trophy, Globe, ArrowRight, Download } from "lucide-react";
 import { PILOT_PDF } from "./labels";
-import HeroBanner3D from "./HeroBanner3D";
 
 export default function V2Hero() {
   const { copy } = useLanguage();
@@ -12,17 +12,11 @@ export default function V2Hero() {
   return (
     <section
       id="top"
-      className="relative w-full min-h-[calc(100vh-5.5rem)] bg-white flex items-center overflow-hidden border-b border-slate-200"
+      className="relative w-full bg-white overflow-hidden border-b border-slate-200"
     >
-      {/* Full-Bleed Right-Side Interactive 3D GLB Scene on Desktop (stretched to top, right, and bottom edges) */}
-      <div className="hidden lg:block absolute top-0 right-0 bottom-0 w-[48%] xl:w-[50%] 2xl:w-[50%] h-full z-0 overflow-hidden select-none">
-        <div className="absolute top-0 bottom-0 left-0 w-16 xl:w-24 bg-gradient-to-r from-white via-white/30 to-transparent pointer-events-none z-10" />
-        <HeroBanner3D />
-      </div>
-
-      {/* Left Column Content */}
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 py-10 lg:py-16 flex flex-col lg:flex-row items-center justify-between pointer-events-none">
-        <div className="w-full lg:w-[48%] xl:w-[46%] 2xl:w-[44%] flex flex-col items-start text-left space-y-5 lg:space-y-6 pr-4 lg:pr-6 pointer-events-auto">
+      <div className="w-full flex flex-col lg:flex-row items-center justify-between">
+        {/* Left Column Content */}
+        <div className="relative z-10 w-full lg:w-[45%] xl:w-[44%] pl-4 pr-4 sm:pl-6 sm:pr-6 lg:pl-12 xl:pl-[max(3rem,calc((100vw-1440px)/2+3rem))] lg:pr-6 py-10 lg:py-12 flex flex-col items-start text-left space-y-5">
           {/* Designer Typography Title */}
           <div className="space-y-0.5">
             <h1 className="text-4xl sm:text-6xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-black tracking-tight uppercase leading-[0.9] text-[#0f172a]">
@@ -92,11 +86,17 @@ export default function V2Hero() {
           </div>
         </div>
 
-        {/* Mobile Hero 3D Scene */}
-        <div className="lg:hidden w-full relative mt-8 pointer-events-auto">
-          <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-[#ebf0f5]">
-            <HeroBanner3D />
-          </div>
+        {/* Right Column: Full Uncropped Photo Flush to Top, Right, and Bottom Edges */}
+        <div className="relative w-full lg:w-[55%] xl:w-[56%] shrink-0 self-stretch pointer-events-none select-none">
+          <Image
+            src="/images/hero-banner-scene.jpg"
+            alt="Mobility Era Board Game with Eiffel Tower and European Journey"
+            width={2032}
+            height={1442}
+            priority
+            unoptimized
+            className="w-full h-auto block"
+          />
         </div>
       </div>
     </section>
