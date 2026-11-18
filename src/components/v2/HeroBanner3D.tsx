@@ -16,8 +16,9 @@ export default function HeroBanner3D({ className = "" }: { className?: string })
     let frameId = 0;
     let disposed = false;
 
-    const width = container.clientWidth || 800;
-    const height = container.clientHeight || 600;
+    const width = container.clientWidth;
+    const height = container.clientHeight;
+    if (width === 0 || height === 0) return;
 
     // Scene matching build_in_blender.py world background (0.92, 0.94, 0.96)
     const scene = new THREE.Scene();
