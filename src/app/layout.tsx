@@ -268,10 +268,10 @@ const jsonLdGraph = {
     },
     {
       "@type": "VideoObject",
-      "@id": `${SITE_URL}/#video-nuig-review`,
-      name: "Prof. in Taxation & Finance Review — NUIG Galway, Ireland",
+      "@id": `${SITE_URL}/#video-galway-review`,
+      name: "Prof. Emer Mulligan Review — University of Galway, Ireland",
       description:
-        "A Professor at the National University of Ireland Galway explains why Mobility Era Game is used as an educational tool in the Master's in Accounting & Taxation.",
+        "Prof. Emer Mulligan (Professor in Taxation & Finance at University of Galway) explains why Mobility Era Game is used as an educational tool in the Master's in Accounting & Taxation.",
       thumbnailUrl: "https://i.ytimg.com/vi/Wut1_fKW-Ts/hqdefault.jpg",
       uploadDate: "2024-03-15T00:00:00Z",
       embedUrl: "https://www.youtube-nocookie.com/embed/Wut1_fKW-Ts",
