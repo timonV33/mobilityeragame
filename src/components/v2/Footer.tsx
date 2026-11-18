@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useLanguage } from "@/components/LanguageContext";
 import type { Language } from "@/data/websiteCopy";
 import { v2Labels, PILOT_PDF } from "./labels";
@@ -35,9 +36,14 @@ export default function V2Footer() {
         <div className="grid grid-cols-12 gap-y-10 lg:gap-x-12">
           <div className="col-span-12 lg:col-span-4">
             <div className="flex items-center">
-              <span className="font-display text-2xl leading-none">
-                Mobility <em>Era</em> Game
-              </span>
+              <Image
+                src="/images/mobility-era-logo.png"
+                alt="Mobility Era — App & Board Game"
+                width={170}
+                height={121}
+                unoptimized
+                className="h-14 w-auto object-contain"
+              />
             </div>
             <p className="mt-4 max-w-sm text-[13.5px] leading-relaxed text-[#0c1017]/60">
               {copy.footer.tagline}

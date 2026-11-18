@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo, useCallback } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import type { Session } from "@supabase/supabase-js";
 import { supabase, type InquiryRecord, type InquiryStatus } from "@/lib/supabase";
@@ -293,9 +294,17 @@ export default function AdminDashboardPage() {
     return (
       <div className="min-h-screen bg-[#f4f5f8] text-[#0c1017] flex flex-col justify-between p-4 sm:p-8">
         <header className="max-w-[1320px] w-full mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center">
-            <span className="font-display text-2xl leading-none">
-              Mobility <em>Era</em> Game · Admin
+          <Link href="/" className="flex items-center gap-3">
+            <Image
+              src="/images/mobility-era-logo.png"
+              alt="Mobility Era — App & Board Game"
+              width={140}
+              height={100}
+              unoptimized
+              className="h-12 w-auto object-contain"
+            />
+            <span className="font-display text-xl leading-none text-[#0c1017]/60">
+              Admin
             </span>
           </Link>
 
@@ -389,9 +398,14 @@ export default function AdminDashboardPage() {
         <div className="max-w-[1400px] mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Link href="/" className="flex items-center">
-              <span className="font-display text-2xl leading-none">
-                Mobility <em>Era</em> Game
-              </span>
+              <Image
+                src="/images/mobility-era-logo.png"
+                alt="Mobility Era — App & Board Game"
+                width={130}
+                height={93}
+                unoptimized
+                className="h-11 w-auto object-contain"
+              />
             </Link>
             <span className="px-2.5 py-0.5 rounded-full bg-[#b4f48c] text-[11px] font-semibold text-[#0c1017]">
               Admin CRM
