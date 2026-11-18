@@ -1,0 +1,28 @@
+# Mobility Era Game — Financial Literacy & European Civic Education Board Game
+
+> Mobility Era is an evidence-based educational board game and digital companion app developed by Researchista (The Hague, Netherlands & Luxembourg). It teaches young people aged 14+ real-life financial literacy, taxation, public budget solidarity, and European civic rights across 41+ European countries in a single 60-minute classroom period.
+
+## Key Facts & Empirical Evidence
+- **Framework Alignment**: Aligned with the official EU/OECD-INFE Financial Competence Framework for Children and Youth (2023) across 4 core areas: Money & Transactions (100% covered), Planning & Managing Finances (~75% covered), Risk & Reward, and Financial Landscape (Public Budget mechanism).
+- **National Pilot Study (Luxembourg)**: Empirically tested with 195 secondary school students across 10 schools in Luxembourg (English, French, and German tracks) under SCRIPT (Ministry of Education, Luxembourg) data governance.
+- **Research Publication**: Working Paper by Dr. Irina Burlacu-De Paoli (UNU-MERIT / Maastricht University), financed by the European Investment Bank Institute (EIBI).
+- **Measured Learning Gains**:
+  - 95% of students demonstrated solid comprehension of gross vs. net income and taxation.
+  - 52% of students volunteered to play again.
+  - +10% demonstrated increase in European Union civic awareness.
+  - Survey breakdown of top student takeaways: 40% Geography & European country facts, 35% Taxes & public finance mechanisms, 19% Money management & economics, 6% Life situations & social safety nets.
+- **Recognition & Memberships**:
+  - Triple E Awards 2023 — European Prize Winner (Community Engagement)
+  - BAFTA Games Beyond Entertainment 2024 (Stage 2)
+  - Member of Dutch EdTech & Luxembourg Startup Association
+  - Registered Trademark: BOIP Reg. #1395977 (Class 28.41)
+
+## Primary Resources
+- [Homepage](https://www.mobilityeragame.com/): Full overview, EU framework competency mapping, classroom package specifications, and pilot inquiry form.
+- [UNU-MERIT / EIBI National Pilot Study Working Paper (PDF)](https://www.mobilityeragame.com/docs/mobility-era-pilot-study-unu-merit.pdf): Full empirical study on educational gaming and financial education in Luxembourg.
+
+## Contact
+- Organization: Researchista
+- Website: https://www.researchista.com
+- Emails: hello@mobilityeragame.com, researchista@outlook.com
+- Locations: The Hague, Netherlands & Luxembourg
