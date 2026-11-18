@@ -169,8 +169,8 @@ export const websiteCopy: Record<Language, WebsiteCopy> = {
     hero: {
       badge: "41 European Countries • Strategy & Trivia",
       title1: "MOBILITY",
-      title2: "ERA",
-      subtitle: "The Board Game",
+      title2: "ERA GAME",
+      subtitle: "The Board Game & App",
       description:
         "Financial literacy, civic awareness & digital inclusion — taught in one board game, aligned with the EU framework. In one classroom hour, students aged 14+ learn how to navigate real life: income, taxes, work, and civic rights.",
       frameworkNote:
@@ -434,8 +434,8 @@ export const websiteCopy: Record<Language, WebsiteCopy> = {
     hero: {
       badge: "41 Pays Européens • Stratégie & Culture Générale",
       title1: "MOBILITY",
-      title2: "ERA",
-      subtitle: "Le Jeu de Société",
+      title2: "ERA GAME",
+      subtitle: "Le Jeu de Société & App",
       description:
         "Éducation financière, civique et inclusion numérique — dans un seul jeu, aligné sur le cadre européen. En une heure de classe, les élèves de 14 ans et plus apprennent à naviguer dans la vie réelle : revenus, impôts, travail et droits civiques.",
       frameworkNote:
@@ -699,8 +699,8 @@ export const websiteCopy: Record<Language, WebsiteCopy> = {
     hero: {
       badge: "41 Europäische Länder • Strategie & Allgemeinbildung",
       title1: "MOBILITY",
-      title2: "ERA",
-      subtitle: "Das Gesellschaftsspiel",
+      title2: "ERA GAME",
+      subtitle: "Das Gesellschaftsspiel & App",
       description:
         "Finanzielle Bildung, staatsbürgerliches Bewusstsein und digitale Teilhabe — in einem Spiel, ausgerichtet am EU-Rahmenwerk. In einer Unterrichtsstunde lernen Jugendliche ab 14, sich im echten Leben zurechtzufinden: Einkommen, Steuern, Arbeit und Bürgerrechte.",
       frameworkNote:
@@ -964,8 +964,8 @@ export const websiteCopy: Record<Language, WebsiteCopy> = {
     hero: {
       badge: "41 Paesi Europei • Strategia & Quiz",
       title1: "MOBILITY",
-      title2: "ERA",
-      subtitle: "Il Gioco da Tavolo",
+      title2: "ERA GAME",
+      subtitle: "Il Gioco da Tavolo & App",
       description:
         "Educazione finanziaria, consapevolezza civica e inclusione digitale — in un solo gioco, allineato al quadro europeo. In un'ora di lezione, gli studenti dai 14 anni imparano a orientarsi nella vita reale: reddito, tasse, lavoro e diritti civici.",
       frameworkNote:
@@ -1229,8 +1229,8 @@ export const websiteCopy: Record<Language, WebsiteCopy> = {
     hero: {
       badge: "41 de Țări Europene • Strategie & Cultură Generală",
       title1: "MOBILITY",
-      title2: "ERA",
-      subtitle: "Jocul de Societate",
+      title2: "ERA GAME",
+      subtitle: "Jocul de Societate & App",
       description:
         "Alfabetizare financiară, conștiință civică și incluziune digitală — într-un singur joc, aliniat la cadrul european. Într-o oră de curs, elevii de peste 14 ani învață să navigheze prin viața reală: venituri, impozite, muncă și drepturi civice.",
       frameworkNote:
@@ -1494,8 +1494,8 @@ export const websiteCopy: Record<Language, WebsiteCopy> = {
     hero: {
       badge: "41 Países Europeos • Estrategia & Cultura General",
       title1: "MOBILITY",
-      title2: "ERA",
-      subtitle: "El Juego de Mesa",
+      title2: "ERA GAME",
+      subtitle: "El Juego de Mesa & App",
       description:
         "Alfabetización financiera, conciencia cívica e inclusión digital — en un solo juego, alineado con el marco europeo. En una hora de clase, los estudiantes de 14 años o más aprenden a desenvolverse en la vida real: ingresos, impuestos, trabajo y derechos cívicos.",
       frameworkNote:

@@ -38,10 +38,10 @@ export default function V2Hero() {
         <div className="max-w-xl xl:max-w-2xl flex flex-col items-start text-left space-y-6">
           {/* Designer Typography Title */}
           <div className="space-y-0.5">
-            <h1 className="text-5xl sm:text-7xl lg:text-8xl xl:text-[5.5rem] font-black tracking-tight uppercase leading-[0.88] text-[#0f172a]">
+            <h1 className="text-5xl sm:text-7xl lg:text-7xl xl:text-[5rem] font-black tracking-tight uppercase leading-[0.88] text-[#0f172a]">
               <span>{copy.hero.title1}</span>
               <br />
-              <span className="text-[#1a66ff]">{copy.hero.title2}</span>
+              <span className="text-[#1a66ff] whitespace-nowrap">{copy.hero.title2}</span>
             </h1>
             <p className="font-[family-name:var(--font-caveat)] text-4xl sm:text-5xl lg:text-6xl text-[#0f172a] font-bold tracking-tight pl-0.5 select-none leading-tight mt-1">
               {copy.hero.subtitle}

@@ -140,9 +140,9 @@ export default function V2Footer() {
       {/* Giant Pale-Blue Watermark Wordmark across bottom — exact match to reference bottom-right */}
       <div
         aria-hidden
-        className="mt-6 text-center font-display leading-[0.76] tracking-[-0.04em] text-[20vw] text-[#dce8fc]/75 select-none pointer-events-none translate-y-[10%]"
+        className="mt-6 text-center font-display leading-[0.76] tracking-[-0.04em] text-[15vw] text-[#dce8fc]/75 select-none pointer-events-none translate-y-[10%] whitespace-nowrap"
       >
-        Mobility <em>Era</em>
+        Mobility <em>Era</em> Game
       </div>
     </footer>
   );
